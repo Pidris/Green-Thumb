@@ -31,14 +31,15 @@ int MOD::ReadFile(const char* filePath) {
 		}
 
 		switch (chunkType) {
-			case MODChunk::Header:
+			case MODChunk::Header: {
 				file.seekg(chunkPos + 0x20);
 				file.seekg(sizeof(int), std::ifstream::cur); // skipping reading an unused int
 				m_ShapeFlags = file.ReadU32();
 				//file.seekg(chunkPos + chunkLength + chunkMagicSize);
 				break;
+			}
 
-			case MODChunk::Vertex:
+			case MODChunk::Vertex: {
 				m_VertexCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
 				m_Vertices = new Vector3f[m_VertexCount];
@@ -46,8 +47,9 @@ int MOD::ReadFile(const char* filePath) {
 					m_Vertices[i].Read(file);
 				}
 				break;
+			}
 
-			case MODChunk::VertexNormal:
+			case MODChunk::VertexNormal: {
 				m_NormalCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
 				m_Normals = new Vector3f[m_NormalCount];
@@ -55,8 +57,9 @@ int MOD::ReadFile(const char* filePath) {
 					m_Normals[i].Read(file);
 				}
 				break;
+			}
 
-			case MODChunk::VertexNBT:
+			case MODChunk::VertexNBT: {
 				m_NBTCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
 				m_NBTs = new Vector3f[m_NBTCount];
@@ -64,15 +67,17 @@ int MOD::ReadFile(const char* filePath) {
 					m_NBTs[i].Read(file);
 				}
 				break;
+			}
 
-			case MODChunk::VertexColour:
+			case MODChunk::VertexColour: {
 				m_VtxColorCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
-				m_VtxColors = new Vector3f[m_VtxColorCount];
+				m_VtxColors = new Vector3b[m_VtxColorCount];
 				for (int i = 0; i < m_VtxColorCount; i++) {
 					m_VtxColors[i].Read(file);
 				}
 				break;
+			}
 
 			case MODChunk::TexCoord0:
 			case MODChunk::TexCoord1:
@@ -81,7 +86,7 @@ int MOD::ReadFile(const char* filePath) {
 			case MODChunk::TexCoord4:
 			case MODChunk::TexCoord5:
 			case MODChunk::TexCoord6:
-			case MODChunk::TexCoord7:
+			case MODChunk::TexCoord7:{
 				int index = chunkType - MODChunk::TexCoord0;
 				m_TexCoordCounts[index] = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
@@ -92,8 +97,9 @@ int MOD::ReadFile(const char* filePath) {
 
 				m_TotalActiveTexCoords++;
 				break;
+			}
 
-			case MODChunk::Texture:
+			case MODChunk::Texture: {
 				m_TextureCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
 				m_Textures = new TXE[m_TextureCount];
@@ -101,8 +107,9 @@ int MOD::ReadFile(const char* filePath) {
 					m_Textures[i].Read(file);
 				}
 				break;
+			}
 
-			case MODChunk::TextureAttribute:
+			/*case MODChunk::TextureAttribute:
 				mTexAttrCount = file.ReadU32();
 				file.seekg(chunkPos + 0x20);
 				mTexAttrList = new TexAttr[mTexAttrCount];
@@ -326,7 +333,7 @@ int MOD::ReadFile(const char* filePath) {
 					}
 				}
 				stream.skipPadding(0x20);
-				break;
+				break;*/
 			}
 
 		file.seekg(chunkPos + chunkLength + chunkMagicSize);
@@ -336,7 +343,20 @@ int MOD::ReadFile(const char* filePath) {
 		"Model file: " << filePath << "\n" <<
 		"Flags: " << m_ShapeFlags << "\n" <<
 		"Vertex count: " << m_VertexCount << "\n" <<
-		"Normal count: " << m_NormalCount << "\n";
+		"Normal count: " << m_NormalCount << "\n" <<
+		"NBT count: " << m_NBTCount << "\n" <<
+		"Vertex color count: " << m_VtxColorCount << "\n" <<
+		"Texture count: " << m_TextureCount << "\n" <<
+		"Texture attribute count: " << m_TexAttrCount << "\n" <<
+		"Total active texcoords: " << m_TotalActiveTexCoords << "\n" <<
+		"Texture 1 texcoord count: " << m_TexCoordCounts[0] << "\n" <<
+		"Texture 2 texcoord count: " << m_TexCoordCounts[1] << "\n" <<
+		"Texture 3 texcoord count: " << m_TexCoordCounts[2] << "\n" <<
+		"Texture 4 texcoord count: " << m_TexCoordCounts[3] << "\n" <<
+		"Texture 5 texcoord count: " << m_TexCoordCounts[4] << "\n" <<
+		"Texture 6 texcoord count: " << m_TexCoordCounts[5] << "\n" <<
+		"Texture 7 texcoord count: " << m_TexCoordCounts[6] << "\n" <<
+		"Texture 8 texcoord count: " << m_TexCoordCounts[7] << "\n";
 
 	file.close();
 	return 1;

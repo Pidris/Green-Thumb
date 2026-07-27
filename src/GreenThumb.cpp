@@ -41,15 +41,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 		NULL, NULL, hInstance, NULL
 	);
 	
+	if (!mainWindow)
+		return 0;
+
 	menuBar = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_MENU_BAR));
 	SetMenu(mainWindow, menuBar);
 	ctxMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDR_CONTEXT_MENU));
 
 	HWND bButton = CreateWindow(L"BUTTON", L"Clicker", UI::BaseStyle, 10, 10, UI::Button.Width, UI::Button.Height, mainWindow, NULL, hInstance, NULL);
 	
-	if (mainWindow == NULL){
-		return 0;
-	}
 
 	ShowWindow(mainWindow, nCmdShow);
 

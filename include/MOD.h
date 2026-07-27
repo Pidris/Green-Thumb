@@ -28,29 +28,30 @@ enum MODChunk : int {
 };
 
 struct Vector3f;
+struct Vector3b;
+struct Vector2f;
 struct TXE;
 
 class MOD { // this thing is MAJORATIVELY source code i scalped straight off the Pikmin 1 decomp
 	public:
 
-
 		int ReadFile(const char*);
 
 
 		int m_ShapeFlags;
-		unsigned int m_VertexCount;
+		unsigned int m_VertexCount = 0;
 		Vector3f* m_Vertices;
-		unsigned int m_NormalCount;
+		unsigned int m_NormalCount = 0;
 		Vector3f* m_Normals;
-		unsigned int m_NBTCount;
+		unsigned int m_NBTCount = 0;
 		Vector3f* m_NBTs;
-		unsigned int m_VtxColorCount;
+		unsigned int m_VtxColorCount = 0;
 		Vector3b* m_VtxColors;
-		unsigned int m_TexCoordCounts[8];
+		unsigned int m_TexCoordCounts[8] = { 0 };
 		Vector2f* m_TexCoords[8];
 		unsigned int m_TotalActiveTexCoords = 0;
-		unsigned int m_TextureCount;
+		unsigned int m_TextureCount = 0;
 		TXE* m_Textures;
-		unsigned int m_TexAttrCount;
+		unsigned int m_TexAttrCount = 0;
 
 };

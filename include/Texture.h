@@ -1,7 +1,7 @@
 #pragma once
 
 enum class TexFmt {
-	NULL = -1, ///< -1, invalid format.
+	NONE = -1, ///< -1, invalid format.
 	RGB565 = 0,  ///< 0, 16-bit color, max alpha (5 red, 6 green, 5 blue).
 	S3TC = 1,  ///< 1, S3 texture compression (block-based, supports alpha).
 	RGB5A3 = 2,  ///< 2, either 15-bit color max alpha, or 12-bit color with 3-bit alpha, depending on first bit (1=max alpha).
